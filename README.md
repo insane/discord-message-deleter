@@ -1,9 +1,8 @@
 # discord message deleter
-delete your discord messages at ease!
 
 ## how to install:
 
-Programs to install:
+Install Python:
 https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe
 
 > 1. Install Python <3.8 (<b>Make sure you add Python to PATH during installation</b>)
