@@ -1,6 +1,6 @@
 # discord message deleter
 
-## installation:
+## Installation:
 
 Install Python:
 https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe
