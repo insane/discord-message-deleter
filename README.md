@@ -1,15 +1,15 @@
 # discord message deleter
 
-### how to install:
+## installation:
 
 Install Python:
 https://www.python.org/ftp/python/3.7.3/python-3.7.3-amd64.exe
 
-> 1. Install Python <3.8 (<b>Make sure you add Python to PATH during installation</b>)
-> 2. Clone the repository to a folder or download as ZIP - make sure to extract
-> 3. Run **installer.bat** to install the required python modules needed to run the program
-> 4. After the installer closes, run **start.bat** and follow the steps within the command prompt
-> 5. You will be asked for the token & discord message link to delete from (any message link within the channel)
+1. Install Python <3.8 (<b>Make sure you add Python to PATH during installation</b>)
+2. Clone the repository to a folder or download as ZIP - make sure to extract
+3. Run **installer.bat** to install the required python modules needed to run the program
+4. After the installer closes, run **start.bat** and follow the steps within the command prompt
+5. You will be asked for the token & discord message link to delete from (any message link within the channel)
 
 To get the message link, right click any message within the channel you want to delete from & click on the Copy Message Link button
 
