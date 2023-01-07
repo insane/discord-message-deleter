@@ -8,6 +8,8 @@ token = None
 cpm = []
 deleted = 0
 
+client = discord.Client()
+
 def printLine(ln):
     print(f"[bold blue]{datetime.now().strftime('%H:%M:%S')}[/bold blue] {ln}")
 
@@ -29,36 +31,43 @@ def display():
 
 threading.Thread(target=display).start()
 
-class MyClient(discord.Client):
-
-    async def on_ready(self):
-        global cpm, deleted
-        
-        printLine(f"logged in as {self.user}")
-        while 1:
+@client.event
+async def on_ready():
+    global cpm, deleted
+    
+    printLine(f"logged in as {client.user}")
+    while 1:
+        try:
             channel_id = int(input(f"\n[INPUT]: discord message link: ").split('/')[5])
             oldest_option = input(f"[OPTION]: oldest to first deletion? Y/N: ")
             oldest_option = False if oldest_option == "N" else True
             
-            channel = self.get_channel(channel_id)
+            channel = client.get_channel(channel_id)
             printLine("starting task to delete messages..")
-            
-            async for msg in channel.history(limit=None, oldest_first=oldest_option):
-                try:
-                    
-                    if msg.author == self.user and msg.type == discord.MessageType.default:
-                        printLine(f"[{msg.id}] => successfully deleted")
-                        deleted += 1
-                        cpm.insert(0, time.time())
-                        await msg.delete()
-                        
-                except: continue
-                
-            printLine(f"{deleted} messages deleted.")
-            deleted = 0
 
-try:
-    client = MyClient(heartbeat_timeout=86400, guild_subscriptions=False)
-    client.run(token, bot=False)
-except KeyboardInterrupt:
-    printLine(f"program quit by interrupt, reopen")
+            while 1:
+                async for msg in channel.history(limit=None, oldest_first=oldest_option):
+                    try:
+                        
+                        if msg.author == client.user and msg.type == discord.MessageType.default:
+                            printLine(f"[{msg.id}] => successfully deleted")
+                            deleted += 1
+                            cpm.insert(0, time.time())
+                            await msg.delete()
+                            
+                    except Exception as err:
+                        printLine(f"[{msg.id}] => ratelimit exceeded")
+                        pass
+
+                if deleted == 0:
+                    break
+                else:
+                    printLine("restarting task to delete rest of messages..")
+                
+                printLine(f"{deleted} messages deleted for task")
+                deleted = 0
+        except:
+            printLine(f"unable to find the dm channel, unblock or open their dm")
+            continue
+
+client.run(token, bot=False)
